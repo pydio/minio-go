@@ -82,6 +82,10 @@ type Client struct {
 
 	// Random seed.
 	random *rand.Rand
+
+	// Additional Metadata that will be
+	// Appended as customHeader
+	AdditionalMeta map[string]string
 }
 
 // Global constants.
@@ -510,6 +514,16 @@ func (c Client) executeMethod(method string, metadata requestMetadata) (res *htt
 		bodyCloser, ok := metadata.contentBody.(io.Closer)
 		if ok {
 			defer bodyCloser.Close()
+		}
+	}
+
+	// Append additional meta as header, if there are any
+	if c.AdditionalMeta != nil && len(c.AdditionalMeta) > 0{
+		if metadata.customHeader == nil {
+			metadata.customHeader = make(http.Header)
+		}
+		for k, v := range c.AdditionalMeta {
+			metadata.customHeader["X-External-" + k] = []string{v}
 		}
 	}
 

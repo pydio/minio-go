@@ -37,8 +37,21 @@ func NewCore(endpoint string, accessKeyID, secretAccessKey string, secure bool) 
 		return nil, err
 	}
 	s3Client.Client = client
+	s3Client.Client.AdditionalMeta = map[string]string{}
 	return &s3Client, nil
 }
+
+// Set some additional metadata. Clear after executing request
+// by using core.ClearMetadata()
+func (c Core) PrepareMetadata(meta map[string]string) {
+	c.Client.AdditionalMeta = meta
+}
+
+// Reset additional metadata
+func (c Core) ClearMetadata(){
+	c.Client.AdditionalMeta = map[string]string{}
+}
+
 
 // ListObjects - List all the objects at a prefix, optionally with marker and delimiter
 // you can further filter the results.
