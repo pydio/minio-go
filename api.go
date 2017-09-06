@@ -443,6 +443,13 @@ func (c Client) dumpHTTP(req *http.Request, resp *http.Response) error {
 func (c Client) do(req *http.Request) (*http.Response, error) {
 	var resp *http.Response
 	var err error
+
+	if c.AdditionalMeta != nil && len(c.AdditionalMeta) > 0{
+		for k, v := range c.AdditionalMeta {
+			req.Header.Set(k, v)
+		}
+	}
+
 	// Do the request in a loop in case of 307 http is met since golang still doesn't
 	// handle properly this situation (https://github.com/golang/go/issues/7912)
 	for {
@@ -514,16 +521,6 @@ func (c Client) executeMethod(method string, metadata requestMetadata) (res *htt
 		bodyCloser, ok := metadata.contentBody.(io.Closer)
 		if ok {
 			defer bodyCloser.Close()
-		}
-	}
-
-	// Append additional meta as header, if there are any
-	if c.AdditionalMeta != nil && len(c.AdditionalMeta) > 0{
-		if metadata.customHeader == nil {
-			metadata.customHeader = make(http.Header)
-		}
-		for k, v := range c.AdditionalMeta {
-			metadata.customHeader["X-External-" + k] = []string{v}
 		}
 	}
 
