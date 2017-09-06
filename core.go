@@ -39,6 +39,9 @@ func NewCore(endpoint string, accessKeyID, secretAccessKey string, secure bool) 
 		return nil, err
 	}
 	s3Client.Client = client
+	// For Debugging
+	//client.isTraceEnabled = true
+	//client.traceOutput = os.Stdout
 	s3Client.Client.AdditionalMeta = map[string]string{}
 	return &s3Client, nil
 }
