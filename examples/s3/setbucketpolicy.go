@@ -21,8 +21,8 @@ package main
 import (
 	"log"
 
-	"github.com/minio/minio-go"
-	"github.com/minio/minio-go/pkg/policy"
+	"github.com/pydio/minio-go"
+	"github.com/pydio/minio-go/pkg/policy"
 )
 
 func main() {

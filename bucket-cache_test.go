@@ -28,8 +28,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/minio/minio-go/pkg/credentials"
-	"github.com/minio/minio-go/pkg/s3signer"
+	"github.com/pydio/minio-go/pkg/credentials"
+	"github.com/pydio/minio-go/pkg/s3signer"
 )
 
 // Test validates `newBucketLocationCache`.

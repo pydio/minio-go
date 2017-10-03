@@ -22,7 +22,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/minio/minio-go/pkg/set"
+	"github.com/pydio/minio-go/pkg/set"
 )
 
 // isValidStatement() is called and the result is validated.

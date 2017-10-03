@@ -22,7 +22,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/minio/minio-go"
+	"github.com/pydio/minio-go"
 )
 
 func main() {

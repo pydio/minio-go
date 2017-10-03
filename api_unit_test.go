@@ -22,8 +22,8 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/minio/minio-go/pkg/credentials"
-	"github.com/minio/minio-go/pkg/policy"
+	"github.com/pydio/minio-go/pkg/credentials"
+	"github.com/pydio/minio-go/pkg/policy"
 )
 
 type customReader struct{}

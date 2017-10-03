@@ -22,7 +22,7 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/minio/minio-go"
+	"github.com/pydio/minio-go"
 )
 
 func main() {
