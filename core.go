@@ -22,6 +22,7 @@ import (
 	"strings"
 
 	"github.com/pydio/minio-go/pkg/policy"
+	"golang.org/x/net/lex/httplex"
 )
 
 // Core - Inherits Client and adds new methods to expose the low level S3 APIs.
@@ -49,7 +50,16 @@ func NewCore(endpoint string, accessKeyID, secretAccessKey string, secure bool) 
 // Set some additional metadata. Clear after executing request
 // by using core.ClearMetadata()
 func (c Core) PrepareMetadata(meta map[string]string) {
-	c.Client.AdditionalMeta = meta
+	filteredMeta := make(map[string]string)
+	for k, v := range meta {
+		if strings.ToLower(k) == "authorization" {
+			continue
+		}
+		if httplex.ValidHeaderFieldName(k) && httplex.ValidHeaderFieldValue(v) {
+			filteredMeta[k] = v
+		}
+	}
+	c.Client.AdditionalMeta = filteredMeta
 }
 
 // Reset additional metadata
