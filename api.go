@@ -38,9 +38,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/minio/minio-go/pkg/credentials"
-	"github.com/minio/minio-go/pkg/s3signer"
-	"github.com/minio/minio-go/pkg/s3utils"
+	"github.com/pydio/minio-go/pkg/credentials"
+	"github.com/pydio/minio-go/pkg/s3signer"
+	"github.com/pydio/minio-go/pkg/s3utils"
+
+	cellscontext "github.com/pydio/cells/common/utils/context"
 )
 
 // Client implements Amazon S3 compatible methods.
@@ -582,6 +584,9 @@ func (c Client) executeMethod(ctx context.Context, method string, metadata reque
 
 		// Add context to request
 		req = req.WithContext(ctx)
+
+		// Set headers passed throught the context
+		cellscontext.AppendCellsMetaFromContext(ctx, req)
 
 		// Initiate the request.
 		res, err = c.do(req)

@@ -38,7 +38,7 @@ Minio client需要以下4个参数来连接与Amazon S3兼容的对象存储。
 package main
 
 import (
-	"github.com/minio/minio-go"
+	"github.com/pydio/minio-go"
 	"log"
 )
 
@@ -68,7 +68,7 @@ func main() {
 package main
 
 import (
-	"github.com/minio/minio-go"
+	"github.com/pydio/minio-go"
 	"log"
 )
 

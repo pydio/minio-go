@@ -26,7 +26,7 @@ Minio client requires the following four parameters specified to connect to an A
 package main
 
 import (
-	"github.com/minio/minio-go"
+	"github.com/pydio/minio-go"
 	"log"
 )
 
@@ -56,7 +56,7 @@ We will use the Minio server running at [https://play.minio.io:9000](https://pla
 package main
 
 import (
-	"github.com/minio/minio-go"
+	"github.com/pydio/minio-go"
 	"log"
 )
 
