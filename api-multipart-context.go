@@ -66,7 +66,7 @@ func (c Core) ListMultipartUploadsWithContext(ctx context.Context, bucket, prefi
 	urlValues.Set("max-uploads", fmt.Sprintf("%d", maxUploads))
 
 	// Execute GET on bucketName to list multipart uploads.
-	resp, err := c.executeMethod(context.Background(), "GET", requestMetadata{
+	resp, err := c.executeMethod(ctx, "GET", requestMetadata{
 		bucketName:       bucket,
 		queryValues:      urlValues,
 		contentSHA256Hex: emptySHA256Hex,
@@ -106,7 +106,7 @@ func (c Core) ListObjectPartsWithContext(ctx context.Context, bucketName, object
 	urlValues.Set("max-parts", fmt.Sprintf("%d", maxParts))
 
 	// Execute GET on objectName to get list of parts.
-	resp, err := c.executeMethod(context.Background(), "GET", requestMetadata{
+	resp, err := c.executeMethod(ctx, "GET", requestMetadata{
 		bucketName:       bucketName,
 		objectName:       objectName,
 		queryValues:      urlValues,
