@@ -69,18 +69,23 @@ func (c Client) getBucketTagging(bucketName string) ([]Tag, error) {
 
 	defer closeResponse(resp)
 	if err != nil {
+		// Handle specific NoSuchTagSetError (= no tag) with 500 Status
+		if resp != nil {
+			errResp := ErrorResponse{
+				StatusCode: resp.StatusCode,
+			}
+			if e := xmlDecoder(resp.Body, &errResp); e == nil && errResp.Code == "NoSuchTagSetError" {
+				return []Tag{}, nil
+			}
+			if resp.StatusCode != http.StatusOK {
+				return nil, httpRespToErrorResponse(resp, bucketName, "")
+			}
+		}
 		return nil, err
 	}
-
-	if resp != nil {
-		if resp.StatusCode != http.StatusOK {
-			return nil, httpRespToErrorResponse(resp, bucketName, "")
-		}
-	}
-	tagging := &Tagging{}
+	tagging := Tagging{}
 	if er := xmlDecoder(resp.Body, &tagging); er != nil {
 		return nil, er
 	}
-
-	return tagging.TagSet.Tag, err
+	return tagging.TagSet.Tag, nil
 }

@@ -1,6 +1,7 @@
 package minio
 
 import (
+	"encoding/xml"
 	"strings"
 	"testing"
 )
@@ -30,5 +31,17 @@ func TestClient_GetBucketTagging(t *testing.T) {
 	tags := tagging.TagSet.Tag
 	if tags[0].Key != "Project" || tags[0].Value != "Project One" {
 		t.Fatalf("wrong tag[0] value %v", tags[0])
+	}
+
+	emptyResponse := `<Tagging></Tagging>`
+	reader = strings.NewReader(emptyResponse)
+	tagging = Tagging{}
+	er = xmlDecoder(reader, &tagging)
+	if er != nil {
+		t.Fatalf("cannot decode response: %s", er.Error())
+	}
+	_, er = xml.Marshal(Tagging{})
+	if er != nil {
+		t.Fatalf("cannot decode response: %s", er.Error())
 	}
 }
