@@ -42,7 +42,7 @@ func (c Client) GetBucketTagging(bucketName string) ([]Tag, error) {
 	if err := s3utils.CheckValidBucketName(bucketName); err != nil {
 		return nil, err
 	}
-	tags, err := c.GetBucketTagging(bucketName)
+	tags, err := c.getBucketTagging(bucketName)
 	if err != nil {
 		errResponse := ToErrorResponse(err)
 		if errResponse.Code == "NoSuchBucketPolicy" {
