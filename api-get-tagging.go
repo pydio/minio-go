@@ -37,18 +37,18 @@ type Tagging struct{
 }
 
 // GetBucketPolicy - get bucket policy at a given path.
-func (c Client) GetBucketTagging(bucketName string) (string, error) {
+func (c Client) GetBucketTagging(bucketName string) ([]Tag, error) {
 	// Input validation.
 	if err := s3utils.CheckValidBucketName(bucketName); err != nil {
-		return "", err
+		return nil, err
 	}
 	tags, err := c.GetBucketTagging(bucketName)
 	if err != nil {
 		errResponse := ToErrorResponse(err)
 		if errResponse.Code == "NoSuchBucketPolicy" {
-			return "", nil
+			return []Tag{}, nil
 		}
-		return "", err
+		return nil, err
 	}
 	return tags, nil
 }
